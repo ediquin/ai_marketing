@@ -27,10 +27,7 @@ COPY README.md ./README.md
 # Create .streamlit directory and install package
 RUN mkdir -p .streamlit && pip install -e .
 
-# Default environment
-ENV PORT=8080
-
-EXPOSE $PORT
+EXPOSE 8080
 
 # Simple startup with config file
 CMD ["sh", "-c", "echo 'Starting Streamlit on port:' $PORT && streamlit run src/streamlit_app.py --server.port=$PORT"]
