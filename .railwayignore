@@ -1,0 +1,12 @@
+# Force Railway to ignore Nixpacks detection
+package.json
+yarn.lock
+package-lock.json
+requirements.txt
+Pipfile
+Pipfile.lock
+pyproject.toml
+poetry.lock
+Cargo.toml
+go.mod
+composer.json
