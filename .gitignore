@@ -79,6 +79,7 @@ tmp/
 
 # Model files (if using local models)
 models/
+!src/models/
 *.bin
 *.safetensors
 *.gguf
