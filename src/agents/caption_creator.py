@@ -5,7 +5,7 @@ import logging
 import time
 from typing import Dict, Any
 
-from models.content_brief import EngagementElements
+from src.models.content_brief import EngagementElements
 from tools.llm_client import LLMClient
 from config.prompts import get_prompt_template, AGENT_TEMPLATES
 

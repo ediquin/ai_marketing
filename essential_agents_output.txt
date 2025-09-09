@@ -1,0 +1,9 @@
+=== PROMPT ===
+
+        Crea un post de LinkedIn anunciando el lanzamiento de 'Nexus Taskboard', 
+        una nueva herramienta SaaS para gestores de equipos técnicos. 
+        El tono debe ser profesional y entusiasta, destacando cómo mejora la productividad.
+        
+
+=== GENERATED CONTENT ===
+¡Lanzamos Nexus Taskboard! La herramienta SaaS que revoluciona la gestión de equipos técnicos. Mejora la productividad y eficiencia de tus proyectos con nuestra solución innovadora y confiable. Con Nexus Taskboard, podrás asignar tareas, establecer plazos y monitorear el progreso de manera clara y directa. Nuestro objetivo es ayudarte a alcanzar tus objetivos de manera efectiva. ¡Descubre cómo Nexus Taskboard puede transformar tu equipo y tu negocio! #NexusTaskboard #GestiónDeEquipos #Productividad #Innovación #TecnologíaSaaS

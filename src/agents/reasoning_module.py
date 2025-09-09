@@ -5,7 +5,7 @@ import logging
 import time
 from typing import Dict, Any
 
-from models.content_brief import ReasoningModule
+from src.models.content_brief import ReasoningModule
 from tools.llm_client import LLMClient
 from config.prompts import get_prompt_template, AGENT_TEMPLATES
 
@@ -79,6 +79,22 @@ class ReasoningModuleAgent:
             generation_time = time.time() - start_time
             self.logger.info(f"Razonamiento estratégico generado en {generation_time:.2f}s")
             self.logger.info(f"Decisiones estratégicas: {len(reasoning.strategic_decisions)}")
+            
+            # Verificar elementos requeridos (engagement_elements es opcional)
+            required_elements = ["prompt_analysis", "post_type", "brand_voice"]
+            missing_elements = []
+            
+            for element in required_elements:
+                if not state.get(element):
+                    missing_elements.append(element)
+            
+            if missing_elements:
+                error_msg = f"Elemento requerido no disponible: {', '.join(missing_elements)}"
+                self.logger.error(error_msg)
+                
+                # Actualizar estado con error
+                state["errors"].append(f"[reasoning_module]: {error_msg}")
+                state["current_step"] = "error"
             
             # Registrar tiempo del agente
             state["agent_timings"]["reasoning_module"] = generation_time

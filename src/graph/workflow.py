@@ -9,7 +9,7 @@ from datetime import datetime
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
-from models.content_brief import ContentBrief, ProcessingMetadata
+from src.models.content_brief import ContentBrief, ProcessingMetadata
 from graph.state import WorkflowState, finalize_state
 from agents.prompt_analyzer import PromptAnalyzer
 from agents.post_classifier import PostClassifier
@@ -148,8 +148,11 @@ class MarketingWorkflow:
                 if hasattr(final_state, 'final_brief') and final_state.final_brief and hasattr(final_state.final_brief, 'metadata') and final_state.final_brief.metadata:
                     final_state.final_brief.metadata.processing_time = total_time
                     final_state.final_brief.metadata.model_used = self.llm_client.__class__.__name__
-                    final_state.final_brief.metadata.timestamp = final_state.processing_end
-                    final_state.final_brief.metadata.version = "1.0.0"
+                    # El esquema minimal usa timestamp como string
+                    try:
+                        final_state.final_brief.metadata.timestamp = final_state.processing_end.isoformat()
+                    except Exception:
+                        final_state.final_brief.metadata.timestamp = str(final_state.processing_end)
             
             if 'total_time' in locals():
                 logger.info(f"Workflow completado en {total_time:.2f}s")
@@ -212,10 +215,6 @@ class MarketingWorkflow:
                     metadata = final_state.final_brief.metadata
                     logger.info(f"Tiempo total: {metadata.processing_time:.2f}s")
                     logger.info(f"Modelo usado: {metadata.model_used}")
-                    
-                    # Log de tiempos por agente
-                    for agent, timing in metadata.agent_timings.items():
-                        logger.info(f"  {agent}: {timing:.2f}s")
             
             return final_state
             

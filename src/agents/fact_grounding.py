@@ -5,7 +5,7 @@ import logging
 import time
 from typing import Dict, Any
 
-from models.content_brief import FactualGrounding
+from src.models.content_brief import FactualGrounding
 from tools.llm_client import LLMClient
 from config.prompts import get_prompt_template, AGENT_TEMPLATES
 
@@ -64,7 +64,21 @@ class FactGroundingAgent:
             
             # 3. Parsear respuesta
             self.logger.info("Parseando base factual del LLM")
-            factual_grounding = FactualGrounding.from_llm_response(response)
+            # El esquema minimal no define from_llm_response; construimos directamente
+            # Aseguramos claves esperadas
+            if isinstance(response, dict):
+                safe_response = {
+                    "key_facts": response.get("key_facts", []) or [],
+                    "data_sources": response.get("data_sources", []) or [],
+                    "verification_status": response.get("verification_status", "pending")
+                }
+                factual_grounding = FactualGrounding(**safe_response)
+            else:
+                factual_grounding = FactualGrounding(
+                    key_facts=["Información del prompt analizada"],
+                    data_sources=[],
+                    verification_status="pending"
+                )
             
             # 4. Validar output
             self.logger.info("Validando base factual generada")

@@ -5,9 +5,9 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
-from models.content_brief import (
-    MarketingState, PromptAnalysis, PostType, BrandVoice, 
-    FactualGrounding, ContentBrief, EngagementElements, 
+from src.models.content_brief import (
+    PromptAnalysis, PostType, BrandVoice,
+    FactualGrounding, ContentBrief, EngagementElements,
     VisualConcept, ReasoningModule, ProcessingMetadata
 )
 
@@ -235,10 +235,8 @@ def finalize_state(state: WorkflowState) -> WorkflowState:
         # Crear metadatos
         metadata = ProcessingMetadata(
             processing_time=total_time,
-            agent_timings=state.agent_timings,
             model_used="llm_client",  # Se actualizará con el modelo real
-            timestamp=state.processing_end,
-            version="1.0.0"
+            timestamp=(state.processing_end.isoformat() if state.processing_end else datetime.now().isoformat()),
         )
         
         # Crear brief final solo si tenemos todos los componentes necesarios
@@ -250,6 +248,16 @@ def finalize_state(state: WorkflowState) -> WorkflowState:
                 state.final_brief = ContentBrief(
                     post_type=state.post_type,
                     core_content=state.core_content,
+                    prompt_analysis=state.prompt_analysis if state.prompt_analysis else PromptAnalysis(
+                        objective="",
+                        audience="",
+                        brand_cues=[],
+                        key_facts=[],
+                        urgency=None,
+                        platform=None,
+                        tone_indicators=[],
+                        content_goals=[]
+                    ),
                     engagement_elements=state.engagement_elements,
                     visual_concept=state.visual_concept,
                     brand_voice=state.brand_voice,
