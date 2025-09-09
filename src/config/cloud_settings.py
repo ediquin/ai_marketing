@@ -88,10 +88,6 @@ class CloudSettings(BaseSettings):
     # RAG System (cloud optimized)
     enable_rag: bool = True
     use_realtime_data: bool = False  # Disable to avoid external API calls
-    
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
 
 # Instancia global de configuración cloud
 cloud_settings = CloudSettings()
