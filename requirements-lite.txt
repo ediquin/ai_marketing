@@ -5,6 +5,7 @@ pydantic==2.8.2
 langgraph==0.2.35
 httpx==0.27.0
 python-dotenv==1.0.1
+aiohttp==3.9.5
 # Providers (choose at runtime via env):
 openai==1.40.2
 anthropic==0.34.2
