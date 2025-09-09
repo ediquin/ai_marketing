@@ -10,20 +10,20 @@ from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
 from src.models.content_brief import ContentBrief, ProcessingMetadata
-from graph.state import WorkflowState, finalize_state
-from agents.prompt_analyzer import PromptAnalyzer
-from agents.post_classifier import PostClassifier
-from agents.brand_voice_agent import BrandVoiceAgent
-from agents.fact_grounding import FactGroundingAgent
-from agents.text_generator import TextGenerator
-from agents.caption_creator import CaptionCreator
-from agents.visual_concept import VisualConceptAgent
-from agents.reasoning_module import ReasoningModuleAgent
-from agents.visual_format_recommender import VisualFormatRecommender
-from agents.video_scripter import VideoScripter
-from agents.result_optimizer import ResultOptimizer
-from agents.contextual_awareness import ContextualAwarenessEngine
-from tools.llm_client import create_llm_client
+from src.graph.state import WorkflowState, finalize_state
+from src.agents.prompt_analyzer import PromptAnalyzer
+from src.agents.post_classifier import PostClassifier
+from src.agents.brand_voice_agent import BrandVoiceAgent
+from src.agents.fact_grounding import FactGroundingAgent
+from src.agents.text_generator import TextGenerator
+from src.agents.caption_creator import CaptionCreator
+from src.agents.visual_concept import VisualConceptAgent
+from src.agents.reasoning_module import ReasoningModuleAgent
+from src.agents.visual_format_recommender import VisualFormatRecommender
+from src.agents.video_scripter import VideoScripter
+from src.agents.result_optimizer import ResultOptimizer
+from src.agents.contextual_awareness import ContextualAwarenessEngine
+from src.tools.llm_client import create_llm_client
 
 logger = logging.getLogger(__name__)
 
@@ -189,7 +189,7 @@ class MarketingWorkflow:
             logger.info(f"Iniciando procesamiento del prompt: {input_prompt[:100]}...")
             
             # Crear estado inicial con detección automática de idioma
-            from graph.state import create_initial_state
+            from src.graph.state import create_initial_state
             initial_state = create_initial_state(input_prompt)
             
             # Sobrescribir configuración de idioma si se proporciona explícitamente
