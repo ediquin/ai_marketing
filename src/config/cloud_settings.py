@@ -6,7 +6,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class CloudSettings(BaseSettings):
     """Configuraciones optimizadas para deployment en la nube - Solo modelos cloud"""
     
-    model_config = SettingsConfigDict(extra='ignore')  # Ignorar variables de entorno adicionales
+    model_config = SettingsConfigDict(
+        extra='ignore',  # Ignorar variables de entorno adicionales
+        env_file='.env',
+        env_file_encoding='utf-8',
+        case_sensitive=False
+    )
         
     # APIs principales (requeridas)
     google_api_key: Optional[str] = None
