@@ -3,10 +3,13 @@ from typing import Optional
 try:
     from pydantic_settings import BaseSettings
 except ImportError:
-    from pydantic import BaseSettings
+    from pydantic import BaseSettings, ConfigDict
 
 class Settings(BaseSettings):
     """Configuraciones del sistema de marketing"""
+    
+    # Configuración de LLM
+    llm_provider: str = "google_ai"  # google_ai, openai, anthropic, groq, local
     
     # APIs principales
     google_api_key: Optional[str] = None

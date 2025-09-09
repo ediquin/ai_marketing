@@ -27,17 +27,17 @@ class WorkflowState(BaseModel):
     # Análisis del prompt
     prompt_analysis: Optional[PromptAnalysis] = Field(default=None, description="Análisis del prompt")
     
-    # Clasificación del post
+    # Clasificación de contenido
     post_type: Optional[PostType] = Field(default=None, description="Tipo de post clasificado")
     post_justification: Optional[str] = Field(default=None, description="Justificación de la clasificación")
     
     # Voz de marca
-    brand_voice: Optional[BrandVoice] = Field(default=None, description="Voz de marca definida")
+    brand_voice: Optional[BrandVoice] = Field(default=None, description="Voz de marca")
     
     # Base factual
     factual_grounding: Optional[FactualGrounding] = Field(default=None, description="Base factual")
     
-    # Contenido principal
+    # Contenido generado
     core_content: Optional[str] = Field(default=None, description="Contenido principal generado")
     
     # Elementos de engagement
@@ -61,9 +61,20 @@ class WorkflowState(BaseModel):
     # Configuración de idioma
     language_config: Optional[Dict[str, str]] = Field(default=None, description="Configuración de idioma para respuestas")
     
-    # Metadatos del procesamiento
+    # Metadatos del sistema
+    errors: List[str] = Field(default_factory=list, description="Errores durante el procesamiento")
+    warnings: List[str] = Field(default_factory=list, description="Advertencias del sistema")
     processing_start: Optional[datetime] = Field(default=None, description="Inicio del procesamiento")
     processing_end: Optional[datetime] = Field(default=None, description="Fin del procesamiento")
+    is_complete: bool = Field(default=False, description="Indica si el workflow está completo")
+    is_error: bool = Field(default=False, description="Indica si hubo errores críticos")
+    
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        json_encoders={
+            datetime: lambda v: v.isoformat()
+        }
+    )
     
     # Tiempos por agente
     agent_timings: Dict[str, float] = Field(default_factory=dict, description="Tiempos de procesamiento por agente")
