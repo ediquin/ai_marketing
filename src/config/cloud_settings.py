@@ -1,9 +1,7 @@
 import os
-from typing import Optional
-try:
-    from pydantic_settings import BaseSettings
-except ImportError:
-    from pydantic import BaseSettings
+from typing import Optional, ClassVar
+from pydantic_settings import BaseSettings
+from pydantic import Field
 
 class CloudSettings(BaseSettings):
     """Configuraciones optimizadas para deployment en la nube - Solo modelos cloud"""
@@ -21,7 +19,7 @@ class CloudSettings(BaseSettings):
     anthropic_model: str = "claude-3-sonnet-20240229"
     
     # Configuración cloud-only (sin Ollama)
-    MODEL_STRATEGY: str = "cloud_only"
+    model_strategy: ClassVar[str] = "cloud_only"
     prefer_local: bool = False
     fallback_to_local: bool = False
     model_preference: str = "cloud"
@@ -41,11 +39,11 @@ class CloudSettings(BaseSettings):
     contextual_awareness_model: str = "gemini"
     
     # Configuración del sistema optimizada para cloud
-    max_retries: int = 2
-    timeout_seconds: int = 20
-    max_tokens: int = 1500
-    temperature: float = 0.7
-    target_processing_time: float = 8.0
+    max_retries: int = Field(default=2, description="Número máximo de reintentos")
+    timeout_seconds: int = Field(default=20, description="Tiempo máximo de espera en segundos")
+    max_tokens: int = Field(default=1500, description="Número máximo de tokens")
+    temperature: float = Field(default=0.7, description="Temperatura para la generación")
+    target_processing_time: float = Field(default=8.0, description="Tiempo objetivo de procesamiento")
     
     # Cache y performance
     enable_caching: bool = True
