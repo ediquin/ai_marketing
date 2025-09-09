@@ -1,4 +1,4 @@
-# Lightweight Dockerfile for Railway (<4GB) without RAG
+# Lightweight Dockerfile for Railway (<4GB) without RAG - Force rebuild v2
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
