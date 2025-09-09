@@ -4,11 +4,11 @@ Result-Based Optimizer - Optimiza recomendaciones basado en datos de performance
 import logging
 import time
 from typing import Dict, Any
-from tools.llm_client import LLMClient
-from tools.realtime_data_client import RealTimeDataClient
-from tools.marketing_rag_system import MarketingRAGSystem
-from config.prompts import RESULT_OPTIMIZER_TEMPLATE_ES, RESULT_OPTIMIZER_TEMPLATE_EN
-from config.settings import get_settings
+from src.tools.llm_client import LLMClient
+from src.tools.realtime_data_client import RealTimeDataClient
+from src.tools.marketing_rag_system import MarketingRAGSystem
+from src.config.prompts import RESULT_OPTIMIZER_TEMPLATE_ES, RESULT_OPTIMIZER_TEMPLATE_EN
+from src.config.settings import get_settings
 
 logger = get_settings().getLogger(__name__)
 
@@ -27,7 +27,7 @@ class ResultOptimizer:
         # Inicializar sistema RAG
         self.rag_system = MarketingRAGSystem(enable_rag=enable_rag)
         try:
-            from tools.marketing_rag_system import check_rag_dependencies
+            from src.tools.marketing_rag_system import check_rag_dependencies
             self.rag_dependencies = check_rag_dependencies()
         except ImportError:
             self.rag_dependencies = {"chromadb": False, "sentence_transformers": False, "duckduckgo_search": False}

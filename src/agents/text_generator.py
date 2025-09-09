@@ -3,6 +3,7 @@ Agente Text Generator - Genera contenido principal coherente del post
 """
 import logging
 import time
+from typing import Dict, Any
 from src.models.content_brief import ContentBrief
 from src.tools.llm_client import LLMClient
 from src.config.prompts import get_prompt_template, AGENT_TEMPLATES

@@ -20,15 +20,18 @@ WORKDIR /app
 COPY requirements-lite.txt ./
 RUN pip install --upgrade pip && pip install -r requirements-lite.txt
 
-# Copy src as a package and install as module
-COPY src ./src
+# Copy setup.py first and install package in editable mode
 COPY setup.py ./setup.py
+COPY src ./src
+RUN pip install -e .
+
+# Copy remaining files
 COPY streamlit_config.toml ./.streamlit/config.toml
 COPY run_streamlit_optimized.py ./run_streamlit_optimized.py
 COPY README.md ./README.md
 
-# Create .streamlit directory and install package
-RUN mkdir -p .streamlit && pip install -e .
+# Ensure .streamlit directory exists
+RUN mkdir -p .streamlit
 
 EXPOSE 8080
 
