@@ -1,15 +1,19 @@
 """
 Estado del workflow de marketing para LangGraph
 """
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, ClassVar
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import Field, ConfigDict
+from pydantic import BaseModel as PydanticBaseModel
 
 from models.content_brief import (
     MarketingState, PromptAnalysis, PostType, BrandVoice, 
     FactualGrounding, ContentBrief, EngagementElements, 
     VisualConcept, ReasoningModule, ProcessingMetadata
 )
+
+class BaseModel(PydanticBaseModel):
+    model_config = ConfigDict(extra='ignore', use_enum_values=True)
 
 class WorkflowState(BaseModel):
     """

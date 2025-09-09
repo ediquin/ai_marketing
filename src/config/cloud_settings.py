@@ -1,16 +1,27 @@
 import os
 from typing import Optional, ClassVar
-from pydantic_settings import BaseSettings
 from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class CloudSettings(BaseSettings):
     """Configuraciones optimizadas para deployment en la nube - Solo modelos cloud"""
     
+    model_config = SettingsConfigDict(extra='ignore')  # Ignorar variables de entorno adicionales
+        
     # APIs principales (requeridas)
     google_api_key: Optional[str] = None
     google_model: str = "gemini-1.5-flash"
     groq_api_key: Optional[str] = None
     groq_model: str = "llama-3.1-70b-versatile"
+    
+    # Configuración de modelos locales (ignorados en modo cloud)
+    ollama_base_url: Optional[str] = None
+    local_model_fast: Optional[str] = None
+    local_model_balanced: Optional[str] = None
+    local_model_creative: Optional[str] = None
+    fallback_to_cloud: bool = False
+    log_file: str = "marketing_system.log"
+    metrics_port: int = 8080
     
     # APIs opcionales
     openai_api_key: Optional[str] = None
