@@ -16,6 +16,7 @@ sys.path.append(str(Path(__file__).parent))
 
 from src.graph.workflow import create_marketing_workflow, MarketingWorkflow
 from src.models.content_brief import ContentBrief
+from src.utils.language_detector import Language, LanguageDetector
 
 # Configuración de la página
 st.set_page_config(
