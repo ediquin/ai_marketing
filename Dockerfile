@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Ensure Python can import /app/src as package 'src'
+ENV PYTHONPATH=/app
+
 WORKDIR /app
 
 # Install only lite requirements

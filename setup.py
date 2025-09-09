@@ -28,7 +28,7 @@ setup(
     description="AI Marketing Strategist - Lightweight version with essential agents",
     long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/ai-marketing-strategist",
+    url="https://github.com/ediquin/ai_marketing",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
