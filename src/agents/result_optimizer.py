@@ -210,6 +210,13 @@ class ResultOptimizer:
                 base_engagement = market_data.engagement_rates.get(visual_format, 0.045)
                 platform_data = market_data.platform_metrics.get(platform, {})
                 
+                # Calcular format_boost basado en el formato visual
+                format_boost = 1.0
+                if visual_format == "Video":
+                    format_boost = 1.8
+                elif visual_format == "Carousel":
+                    format_boost = 1.4
+                
                 return {
                     "historical_performance": {
                         "ctr": base_engagement * 0.7,  # CTR típicamente menor que engagement
@@ -231,7 +238,8 @@ class ResultOptimizer:
                     "competitive_insights": market_data.competitive_insights,
                     "confidence_score": 0.85,  # Mayor confianza con datos reales
                     "data_timestamp": market_data.timestamp.isoformat(),
-                    "data_source": "real_time"
+                    "data_source": "real_time",
+                    "format_boost": format_boost
                 }
                 
         except Exception as e:
@@ -271,6 +279,13 @@ class ResultOptimizer:
             contextual_justification = rag_recommendation.get('contextual_justification', {})
             expected_performance = rag_recommendation.get('expected_performance', {})
             
+            # Calcular format_boost basado en el formato visual
+            format_boost = 1.0
+            if visual_format == "Video":
+                format_boost = 1.8
+            elif visual_format == "Carousel":
+                format_boost = 1.4
+            
             return {
                 "historical_performance": {
                     "source": historical_justification.get('source', 'RAG System'),
@@ -288,7 +303,8 @@ class ResultOptimizer:
                 "confidence_score": 0.90 if expected_performance.get('confidence') == 'High' else 0.75,
                 "data_source": "rag_enhanced",
                 "rag_enabled": True,
-                "data_freshness": rag_recommendation.get('data_freshness', '')
+                "data_freshness": rag_recommendation.get('data_freshness', ''),
+                "format_boost": format_boost
             }
             
         except Exception as e:

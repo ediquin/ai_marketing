@@ -61,6 +61,7 @@ class ReasoningModule(BaseModel):
     audience_considerations: str = Field(description="Audience considerations")
     platform_optimization: str = Field(description="Platform-specific optimizations")
     competitive_analysis: str = Field(description="Competitive analysis and positioning", default="")
+    risk_assessment: str = Field(description="Risk assessment and mitigation strategies", default="")
 
 class ProcessingMetadata(BaseModel):
     """Metadata about content processing"""
