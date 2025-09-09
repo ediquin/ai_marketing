@@ -6,7 +6,7 @@ from datetime import datetime
 from pydantic import Field, ConfigDict
 from pydantic import BaseModel as PydanticBaseModel
 
-from models.content_brief import (
+from src.models.content_brief import (
     MarketingState, PromptAnalysis, PostType, BrandVoice, 
     FactualGrounding, ContentBrief, EngagementElements, 
     VisualConcept, ReasoningModule, ProcessingMetadata
