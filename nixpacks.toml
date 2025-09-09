@@ -1,0 +1,7 @@
+# Force Railway to use Dockerfile instead of Nixpacks
+[build]
+builder = "dockerfile"
+dockerfile = "Dockerfile.lite"
+
+[variables]
+NIXPACKS_NO_DEFAULT_CACHE_MOUNT = "1"
