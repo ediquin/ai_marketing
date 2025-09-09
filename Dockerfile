@@ -27,6 +27,6 @@ ENV STREAMLIT_SERVER_HEADLESS=true \
     STREAMLIT_BROWSER_GATHER_USAGE_STATS=false \
     STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false
 
-EXPOSE 8080
+EXPOSE $PORT
 
-CMD ["streamlit", "run", "src/streamlit_app.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["sh", "-c", "streamlit run src/streamlit_app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true"]
