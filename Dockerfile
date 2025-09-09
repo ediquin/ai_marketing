@@ -39,4 +39,4 @@ RUN mkdir -p .streamlit
 EXPOSE 8080
 
 # Debug startup - verify module availability before starting Streamlit
-CMD ["sh", "-c", "echo 'Starting Streamlit on port:' $PORT && echo 'Python path:' && python -c 'import sys; print(sys.path)' && echo 'Testing src import:' && python -c 'import src; print(\"src imported successfully from:\", src.__file__)' && echo 'Testing src.models import:' && python -c 'import src.models; print(\"src.models imported successfully\")' && streamlit run src/streamlit_app.py --server.port=$PORT"]
+CMD ["sh", "-c", "echo 'Starting Streamlit on port:' $PORT && echo 'Python path:' && python -c 'import sys; print(sys.path)' && echo 'Testing src import:' && python -c 'import src; print(\"src imported successfully from:\", src.__file__)' && echo 'Checking src/models directory:' && ls -la /app/src/models/ && echo 'Testing src.models import:' && python -c 'import src.models; print(\"src.models imported successfully\")' && streamlit run src/streamlit_app.py --server.port=$PORT"]
