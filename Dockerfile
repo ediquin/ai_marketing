@@ -20,19 +20,17 @@ RUN pip install --upgrade pip && pip install -r requirements-lite.txt
 # Copy src as a package and install as module
 COPY src ./src
 COPY setup.py ./setup.py
+COPY streamlit_config.toml ./.streamlit/config.toml
 COPY run_streamlit_optimized.py ./run_streamlit_optimized.py
 COPY README.md ./README.md
 
-# Install the package to fix import issues
-RUN pip install -e .
+# Create .streamlit directory and install package
+RUN mkdir -p .streamlit && pip install -e .
 
-# Default Streamlit config for cloud
-ENV STREAMLIT_SERVER_HEADLESS=true \
-    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false \
-    STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION=false \
-    PORT=8080
+# Default environment
+ENV PORT=8080
 
 EXPOSE $PORT
 
-# Debug startup and run Streamlit
-CMD ["sh", "-c", "echo 'Starting on port:' $PORT && echo 'Python path:' && python -c 'import sys; print(sys.path)' && echo 'Testing streamlit import...' && python -c 'import streamlit; print(\"Streamlit OK\")' && echo 'Starting Streamlit...' && streamlit run src/streamlit_app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true --logger.level=debug"]
+# Simple startup with config file
+CMD ["sh", "-c", "echo 'Starting Streamlit on port:' $PORT && streamlit run src/streamlit_app.py --server.port=$PORT"]

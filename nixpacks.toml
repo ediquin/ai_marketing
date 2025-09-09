@@ -1,9 +1,0 @@
-# Disable Nixpacks completely - force Dockerfile usage
-[build]
-builder = "dockerfile"
-dockerfile = "./Dockerfile.lite"
-
-[variables]
-NIXPACKS_NO_DEFAULT_CACHE_MOUNT = "1"
-NIXPACKS_INSTALL_CMD = "echo 'Nixpacks disabled - using Dockerfile'"
-NIXPACKS_BUILD_CMD = "echo 'Using Dockerfile.lite'"
