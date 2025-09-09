@@ -7,8 +7,8 @@ from typing import Dict, Any
 import random
 from datetime import datetime
 
-from tools.llm_client import LLMClient
-from config.prompts import get_prompt_template, AGENT_TEMPLATES
+from src.tools.llm_client import LLMClient
+from src.config.prompts import get_prompt_template, AGENT_TEMPLATES
 
 logger = logging.getLogger(__name__)
 
@@ -223,7 +223,7 @@ class ContextualAwarenessEngine:
             }
             
             # Actualizar estado usando función de estado
-            from graph.state import update_state_with_context, WorkflowState
+            from src.graph.state import update_state_with_context, WorkflowState
             if isinstance(state, dict):
                 workflow_state = WorkflowState(**state)
                 workflow_state = update_state_with_context(workflow_state, contextual_data)
