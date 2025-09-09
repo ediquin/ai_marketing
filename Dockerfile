@@ -17,9 +17,9 @@ RUN pip install --no-cache-dir -r requirements-cloud.txt
 COPY src/ ./src/
 COPY streamlit_cloud.py .
 
-# Crear directorio .streamlit y copiar configuración si existe
+# Crear directorio .streamlit y configuración
 RUN mkdir -p .streamlit
-COPY .streamlit/config.toml ./.streamlit/config.toml
+RUN echo '[global]\ndevelopmentMode = false\n\n[server]\nport = 8501\nenableCORS = false\nenableXsrfProtection = false\nmaxUploadSize = 200\n\n[browser]\ngatherUsageStats = false\n\n[theme]\nprimaryColor = "#1f77b4"\nbackgroundColor = "#ffffff"\nsecondaryBackgroundColor = "#f0f2f6"\ntextColor = "#262730"' > .streamlit/config.toml
 
 # Crear directorio para logs
 RUN mkdir -p logs
