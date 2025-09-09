@@ -16,7 +16,10 @@ RUN pip install --no-cache-dir -r requirements-cloud.txt
 # Copiar código fuente
 COPY src/ ./src/
 COPY streamlit_cloud.py .
-COPY .streamlit/ ./.streamlit/
+
+# Crear directorio .streamlit y copiar configuración si existe
+RUN mkdir -p .streamlit
+COPY .streamlit/config.toml ./.streamlit/config.toml
 
 # Crear directorio para logs
 RUN mkdir -p logs
