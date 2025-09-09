@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ai-marketing-strategist
+    env: python
+    buildCommand: pip install -r requirements-cloud.txt
+    startCommand: streamlit run streamlit_cloud.py --server.port=$PORT --server.address=0.0.0.0
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: STREAMLIT_SERVER_PORT
+        fromService:
+          type: web
+          name: ai-marketing-strategist
+          property: port
+      - key: STREAMLIT_SERVER_ADDRESS
+        value: 0.0.0.0

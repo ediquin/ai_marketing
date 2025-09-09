@@ -27,10 +27,10 @@ class Settings(BaseSettings):
     local_model_creative: str = "qwen2.5:14b"
     
     # Configuración de estrategia de modelos
-    MODEL_STRATEGY: str = "hybrid"  # "local_first", "cloud_first", "hybrid"
-    prefer_local: bool = True
-    fallback_to_cloud: bool = True
-    model_preference: str = "mixed"  # From .env file
+    MODEL_STRATEGY: str = "cloud_first"  # "local_first", "cloud_first", "hybrid"
+    prefer_local: bool = False
+    fallback_to_local: bool = True
+    model_preference: str = "cloud"  # From .env file
     
     # Asignación por agente
     prompt_analyzer_model: str = "gemini"
