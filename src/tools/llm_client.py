@@ -460,11 +460,11 @@ class UnifiedLLMClient:
         if provider and provider in self.clients:
             return self.clients[provider]
         
-        # Fallback inteligente: usar Groq como principal (más rápido, menos rate limiting)
-        if "groq" in self.clients:
+        # Fallback inteligente: usar Google AI como principal (más confiable)
+        if "google" in self.clients:
+            return self.clients["google"]
+        elif "groq" in self.clients:
             return self.clients["groq"]
-        elif "google_ai" in self.clients:
-            return self.clients["google_ai"]
         elif self.clients:
             return list(self.clients.values())[0]
         
@@ -478,13 +478,13 @@ class UnifiedLLMClient:
         if provider and provider in self.clients:
             providers_to_try.append(provider)
         
-        # Agregar fallbacks automáticos
+        # Agregar fallbacks automáticos - priorizar Google AI
+        if "google" in self.clients and "google" not in providers_to_try:
+            providers_to_try.append("google")
         if "groq" in self.clients and "groq" not in providers_to_try:
             providers_to_try.append("groq")
         if "ollama" in self.clients and "ollama" not in providers_to_try:
             providers_to_try.append("ollama")
-        if "google" in self.clients and "google" not in providers_to_try:
-            providers_to_try.append("google")
         
         last_error = None
         
@@ -500,9 +500,9 @@ class UnifiedLLMClient:
                 logger.warning(f"Error con {provider_name}: {error_msg}")
                 last_error = e
                 
-                # Si es error de rate limit (429), probar siguiente proveedor inmediatamente
-                if "429" in error_msg or "Too Many Requests" in error_msg:
-                    logger.info(f"Rate limit en {provider_name}, probando siguiente proveedor...")
+                # Si es error de rate limit (429) o Bad Request (400), probar siguiente proveedor inmediatamente
+                if any(code in error_msg for code in ["429", "400", "Too Many Requests", "Bad Request"]):
+                    logger.info(f"Error {error_msg[:50]}... en {provider_name}, probando siguiente proveedor...")
                     continue
                 # Si es otro error, también continuar con el siguiente
                 continue
@@ -522,13 +522,13 @@ class UnifiedLLMClient:
         if provider and provider in self.clients:
             providers_to_try.append(provider)
         
-        # Agregar fallbacks automáticos
+        # Agregar fallbacks automáticos - priorizar Google AI
+        if "google" in self.clients and "google" not in providers_to_try:
+            providers_to_try.append("google")
         if "groq" in self.clients and "groq" not in providers_to_try:
             providers_to_try.append("groq")
         if "ollama" in self.clients and "ollama" not in providers_to_try:
             providers_to_try.append("ollama")
-        if "google" in self.clients and "google" not in providers_to_try:
-            providers_to_try.append("google")
         
         last_error = None
         
@@ -544,9 +544,9 @@ class UnifiedLLMClient:
                 logger.warning(f"Error con {provider_name}: {error_msg}")
                 last_error = e
                 
-                # Si es error de rate limit (429), probar siguiente proveedor inmediatamente
-                if "429" in error_msg or "Too Many Requests" in error_msg:
-                    logger.info(f"Rate limit en {provider_name}, probando siguiente proveedor...")
+                # Si es error de rate limit (429) o Bad Request (400), probar siguiente proveedor inmediatamente
+                if any(code in error_msg for code in ["429", "400", "Too Many Requests", "Bad Request"]):
+                    logger.info(f"Error {error_msg[:50]}... en {provider_name}, probando siguiente proveedor...")
                     continue
                 # Si es otro error, también continuar con el siguiente
                 continue
