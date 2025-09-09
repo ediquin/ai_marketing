@@ -60,6 +60,7 @@ class ReasoningModule(BaseModel):
     strategic_decisions: List[str] = Field(description="Key strategic decisions")
     audience_considerations: str = Field(description="Audience considerations")
     platform_optimization: str = Field(description="Platform-specific optimizations")
+    competitive_analysis: str = Field(description="Competitive analysis and positioning", default="")
 
 class ProcessingMetadata(BaseModel):
     """Metadata about content processing"""

@@ -346,6 +346,13 @@ class ResultOptimizer:
                     "historical_ctr": data["ctr"]
                 }
         
+        # Calcular format_boost basado en el formato visual
+        format_boost = 1.0
+        if visual_format == "Video":
+            format_boost = 1.8
+        elif visual_format == "Carousel":
+            format_boost = 1.4
+        
         return {
             "historical_performance": {
                 "ctr": format_data["ctr"],
@@ -364,7 +371,8 @@ class ResultOptimizer:
                 "reach_potential": platform_data["reach_multiplier"]
             },
             "confidence_score": min(0.75 + (platform_data["engagement_boost"] - 1.0) * 0.2, 0.95),
-            "conversion_potential": round(projected_engagement * 0.7, 3)
+            "conversion_potential": round(projected_engagement * 0.7, 3),
+            "format_boost": format_boost
         }
     
     def _create_optimization_recommendations(self, state: Dict[str, Any], insights: Dict[str, Any]) -> list:
