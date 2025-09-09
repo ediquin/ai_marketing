@@ -23,8 +23,11 @@ RUN pip install --upgrade pip && pip install -r requirements-lite.txt
 # Copy setup.py first and install package in editable mode
 COPY setup.py ./setup.py
 COPY src ./src
-COPY README.md ./README.md
-RUN pip install -e .
+RUN pip install -e . --verbose
+
+# Verify package installation
+RUN python -c "import sys; print('Python path:', sys.path)"
+RUN python -c "import src; print('src module found at:', src.__file__)"
 
 # Copy remaining files
 COPY streamlit_config.toml ./.streamlit/config.toml
