@@ -23,12 +23,12 @@ RUN pip install --upgrade pip && pip install -r requirements-lite.txt
 # Copy setup.py first and install package in editable mode
 COPY setup.py ./setup.py
 COPY src ./src
+COPY README.md ./README.md
 RUN pip install -e .
 
 # Copy remaining files
 COPY streamlit_config.toml ./.streamlit/config.toml
 COPY run_streamlit_optimized.py ./run_streamlit_optimized.py
-COPY README.md ./README.md
 
 # Ensure .streamlit directory exists
 RUN mkdir -p .streamlit
